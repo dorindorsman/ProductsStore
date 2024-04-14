@@ -1,4 +1,4 @@
-package com.example.productsstore
+package com.example.products_store
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
