@@ -10,8 +10,8 @@ import androidx.navigation.compose.composable
 import com.example.products_store.MainPage.Login
 import com.example.products_store.MainPage.Product
 import com.example.products_store.MainPage.Shop
-import com.example.products_store.shop.ShopView
-import com.example.products_store.shop.ShopViewModelFactory
+import com.example.products_store.store.ShopView
+import com.example.products_store.store.StoreViewModelFactory
 
 object MainPage {
     const val Login = "Login"
@@ -35,7 +35,7 @@ fun MainNavigation(
         composable(route = Shop) {
             ShopView(
                 viewModel(
-                    factory = ShopViewModelFactory()
+                    factory = StoreViewModelFactory()
                 )
             )
         }

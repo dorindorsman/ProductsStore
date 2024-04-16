@@ -1,4 +1,4 @@
-package com.example.products_store.shop
+package com.example.products_store.store
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,12 +11,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.products_store.shop.product_shop.ProductShopView
+import com.example.products_store.store.product_store.ProductShopView
 import com.example.products_store.R
 
 @Composable
 fun ShopView(
-    viewModel: ShopViewModel
+    viewModel: StoreViewModel
 ) {
     Column(modifier = Modifier.padding(horizontal = 12.dp)) {
         Text(

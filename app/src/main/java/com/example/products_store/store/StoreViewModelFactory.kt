@@ -1,12 +1,12 @@
-package com.example.products_store.shop
+package com.example.products_store.store
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.products_store.data.repository.ShopRepository
+import com.example.products_store.data.repository.StoreRepository
 import com.example.products_store.domain.repository.ShopApi
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ShopViewModelFactory : ViewModelProvider.Factory {
+class StoreViewModelFactory : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val retrofitBuilder = retrofit2.Retrofit.Builder()
@@ -15,8 +15,8 @@ class ShopViewModelFactory : ViewModelProvider.Factory {
             .build()
             .create(ShopApi::class.java)
 
-        return ShopViewModel(
-            ShopRepository(retrofitBuilder)
+        return StoreViewModel(
+            StoreRepository(retrofitBuilder)
         ) as T
     }
 }

@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.products_store.data.models.Response
 import com.example.products_store.domain.repository.ShopApi
 
-class ShopRepository (
+class StoreRepository (
     private val api: ShopApi
 ) {
     companion object {

@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">ProductsStore</string>
     <string name="shop">Shop</string>
+    <string name="brand">Brand</string>
+    <string name="price">Price</string>
+    <string name="description">Description</string>
+    <string name="title">Title</string>
 </resources>
