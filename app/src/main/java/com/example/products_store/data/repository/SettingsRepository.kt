@@ -1,6 +1,7 @@
 package com.example.products_store.data.repository
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -22,6 +23,7 @@ class SettingsRepository(
 ) {
 
     companion object {
+        const val TAG = "SettingsRepository"
         const val PREFERENCE_NAME = "settings_preferences"
         const val PREFERENCE_THEME_KEY = "theme"
         const val PREFERENCE_LAN_KEY = "language"
@@ -35,12 +37,14 @@ class SettingsRepository(
     private val dataStore = context.settingsDataStore
 
     suspend fun persistAppTheme(appTheme: AppTheme) {
+        Log.d(TAG, "persistAppTheme")
         dataStore.edit { preference ->
             preference[PreferenceKeys.themeKey] = appTheme.name
         }
     }
 
     suspend fun persistAppLanguage(appLanguage: AppLanguage) {
+        Log.d(TAG, "persistAppLanguage")
         dataStore.edit { preference ->
             preference[PreferenceKeys.lanKey] = appLanguage.name
         }
@@ -71,6 +75,4 @@ class SettingsRepository(
             val appTheme = preferences[PreferenceKeys.lanKey] ?: AppLanguage.System.name
             appTheme
         }
-
-
 }

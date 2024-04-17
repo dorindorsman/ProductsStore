@@ -29,7 +29,7 @@ fun MainScreen(
 //            FloatingActionButton(onClick = {}) {
 //                Icon(Icons.Filled.Add, "Add")
 //            }
-//        }
+//        } fixme add product
     ) { innerPadding ->
         Box(
             modifier = Modifier.padding(

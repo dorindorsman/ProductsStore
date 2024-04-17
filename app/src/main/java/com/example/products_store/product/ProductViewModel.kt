@@ -1,4 +1,4 @@
-package com.example.products_store.products
+package com.example.products_store.product
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -10,27 +10,26 @@ import androidx.lifecycle.viewModelScope
 import com.example.products_store.domain.models.Product
 import com.example.products_store.local.ProductRepository
 import com.example.products_store.store.ProductsMapper
-import com.example.products_store.store.StoreViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ProductsViewModel(
+class ProductViewModel(
     private val productRepository: ProductRepository,
     private val productId: Int
 ) : ViewModel() {
 
     companion object {
-        const val TAG = "ProductsViewModel"
+        const val TAG = "ProductViewModel"
     }
 
     var selectedProduct by mutableStateOf(
         Product()
     )
 
-    fun handle(event: ProductsEvent) {
+    fun handle(event: ProductEvent) {
         Log.d(TAG, "handle $event")
         when (event) {
-            ProductsEvent.SetProductFavorite -> {
+            ProductEvent.SetProductFavorite -> {
                 setProductFavorite()
                 updateProductFavoriteDB()
             }

@@ -16,9 +16,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.products_store.R
 import com.example.products_store.data.models.AppLanguage
-import com.example.products_store.settings.SettingsViewModel
 import com.example.products_store.data.models.AppTheme
 import com.example.products_store.settings.SettingsEvent
+import com.example.products_store.settings.SettingsViewModel
 
 @Composable
 fun SettingsView(viewModel: SettingsViewModel) {
