@@ -10,9 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.example.payplus.ui.ProductsStoreTheme
-import com.example.products_store.local.AppDatabaseProvider
-import com.example.products_store.local.ProductRepository
+import com.example.products_store.main.MainScreen
+import com.example.products_store.ui.ProductsStoreTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -24,7 +23,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 val navController = rememberNavController()
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    MainNavigation(
+                    MainScreen(
                         modifier = Modifier,
                         navController = navController,
                     )

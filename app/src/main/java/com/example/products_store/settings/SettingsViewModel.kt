@@ -1,11 +1,18 @@
 package com.example.products_store.settings
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.products_store.settings.ThemeRepository.isDarkTheme
+import androidx.lifecycle.viewModelScope
+import com.example.products_store.data.models.AppTheme
+import com.example.products_store.ui.ThemeState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class SettingsViewModel(val themeRepository: ThemeRepository) : ViewModel() {
+class SettingsViewModel(
+    private val themeState: ThemeState
+) : ViewModel() {
 
     companion object {
         const val TAG = "SettingsViewModel"
@@ -16,15 +23,22 @@ class SettingsViewModel(val themeRepository: ThemeRepository) : ViewModel() {
 
 
     fun handle(event: SettingsEvent) {
+        Log.d(TAG, "handle")
         when (event) {
             SettingsEvent.SetLanguage -> {}
-            SettingsEvent.SetThemeMode -> {toggleDarkMode(isDarkTheme)}
+            is SettingsEvent.UpdateTheme -> {
+                updateTheme(event.theme)
+            }
+
             SettingsEvent.Logout -> {}
         }
     }
 
-    private fun toggleDarkMode(isDarkTheme: AppTheme) {
-        //themeRepository.onThemeChange(isDarkTheme = isDarkTheme)
+    fun getTheme() = themeState.theme
+
+    private fun updateTheme(theme: AppTheme) = viewModelScope.launch(Dispatchers.IO) {
+        Log.d(TAG, "updateTheme")
+        themeState.updateTheme(theme)
     }
 
     private fun setLanguage(language: String) {

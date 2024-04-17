@@ -27,14 +27,6 @@ fun StoreView(
     }
 
     Column(modifier = Modifier.padding(horizontal = 12.dp)) {
-        Text(
-            text = stringResource(id = R.string.shop),
-            style = MaterialTheme.typography.h4,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(bottom = 4.dp)
-        )
-
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize(),
@@ -45,6 +37,5 @@ fun StoreView(
         }
 
     }
-
 
 }

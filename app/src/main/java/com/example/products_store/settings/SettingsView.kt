@@ -1,6 +1,5 @@
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,9 +8,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,42 +16,32 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.products_store.R
 import com.example.products_store.settings.SettingsViewModel
-import com.example.products_store.settings.AppTheme
+import com.example.products_store.data.models.AppTheme
+import com.example.products_store.settings.SettingsEvent
 
 @Composable
 fun SettingsView(viewModel: SettingsViewModel) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Settings") }
-            )
-        }
-    ) { padding ->
-        SettingsContent(padding = padding, viewModel = viewModel)
-    }
-}
-
-@Composable
-fun SettingsContent(padding: PaddingValues, viewModel: SettingsViewModel) {
-    Column(modifier = Modifier
-        .padding(padding)
-        .fillMaxWidth()) {
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+    ) {
         ThemeRadioButton(
-            isDarkTheme = viewModel.themeRepository.isDarkTheme,
-            onThemeChange =  { isDarkTheme ->
-                //ThemeRepository.onThemeChange(isDarkTheme = isDarkTheme)
+            theme = viewModel.getTheme(),
+            onThemeChange = { theme ->
+                viewModel.handle(SettingsEvent.UpdateTheme(theme))
             }
         )
         LanguagePreference(
             currentLanguage = viewModel.currentLanguage.value ?: "English",
             onLanguageSelected = {
-             //   viewModel.setLanguage(it)
+                //   viewModel.setLanguage(it)
             }
         )
         Button(
             onClick = {
-              //  viewModel.logOut()
-                      },
+                //  viewModel.logOut()
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
@@ -65,28 +52,23 @@ fun SettingsContent(padding: PaddingValues, viewModel: SettingsViewModel) {
 }
 
 @Composable
-fun ThemeRadioButton(onThemeChange: @Composable (AppTheme?) -> Unit, isDarkTheme: AppTheme) {
+fun ThemeRadioButton(onThemeChange: (AppTheme) -> Unit, theme: AppTheme) {
     Column {
+        Text("Theme")
         LabeledRadioButton(
             label = stringResource(id = R.string.light),
-            selected = AppTheme.Light == isDarkTheme,
-            onClick =  {
-                AppTheme.Light
-            }
+            selected = AppTheme.Light == theme,
+            onClick = { onThemeChange(AppTheme.Light) }
         )
         LabeledRadioButton(
-            label =  stringResource(id = R.string.dark),
-            selected = AppTheme.Dark == isDarkTheme,
-            onClick = {
-                AppTheme.Dark
-            }
+            label = stringResource(id = R.string.dark),
+            selected = AppTheme.Dark == theme,
+            onClick = { onThemeChange(AppTheme.Dark) }
         )
         LabeledRadioButton(
             label = stringResource(id = R.string.system),
-            selected = AppTheme.System == isDarkTheme,
-            onClick = {
-                AppTheme.System
-            }
+            selected = AppTheme.System == theme,
+            onClick =  { onThemeChange(AppTheme.System) }
         )
     }
 }
@@ -111,9 +93,11 @@ fun LabeledRadioButton(
 
 @Composable
 fun LanguagePreference(currentLanguage: String, onLanguageSelected: (String) -> Unit) {
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
         Text("Language")
         Row {
             Button(onClick = { onLanguageSelected("English") }) {

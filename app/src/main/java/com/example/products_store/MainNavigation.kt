@@ -16,10 +16,11 @@ import com.example.products_store.MainPage.Login
 import com.example.products_store.MainPage.ProductId
 import com.example.products_store.MainPage.Settings
 import com.example.products_store.MainPage.Store
+import com.example.products_store.favorite.FavoriteView
+import com.example.products_store.favorite.FavoriteViewModelFactory
 import com.example.products_store.products.ProductView
 import com.example.products_store.products.ProductsViewModelFactory
 import com.example.products_store.settings.SettingsViewModelFactory
-import com.example.products_store.settings.ThemeRepository
 import com.example.products_store.store.StoreView
 import com.example.products_store.store.StoreViewModelFactory
 
@@ -72,13 +73,20 @@ fun MainNavigation(
         composable(route = Settings) {
             SettingsView(
                 viewModel(
-                    factory = SettingsViewModelFactory(ThemeRepository)
+                    factory = SettingsViewModelFactory(appContext)
                 )
             )
         }
 
         composable(route = Favorite) {
-
+            FavoriteView(
+                navigateToProduct = { id ->
+                    navController.navigate(route = "Product/$id")
+                },
+                viewModel(
+                    factory = FavoriteViewModelFactory(appContext)
+                )
+            )
         }
     }
 }
