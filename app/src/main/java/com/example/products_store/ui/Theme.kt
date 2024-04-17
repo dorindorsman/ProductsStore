@@ -1,5 +1,6 @@
 package com.example.payplus.ui
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
@@ -20,6 +21,7 @@ private val LightColorPalette = lightColors(
     secondaryVariant = secondaryLightColor,
 )
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun ProductsStoreTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) DarkColorPalette else LightColorPalette

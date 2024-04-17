@@ -34,5 +34,8 @@ data class Product(
     var thumbnail: String? = null,
 
     @SerializedName("images")
-    var images: List<String?>? = null
+    var images: List<String?>? = null,
+
+    @SerializedName("favorite")
+    var favorite: Boolean = false
 )
