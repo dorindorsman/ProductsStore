@@ -17,12 +17,13 @@ import com.example.products_store.R
 import com.example.products_store.utils.observe
 
 @Composable
-fun ShopView(
+fun StoreView(
+    navigateToProduct: (id: Int) -> Unit,
     viewModel: StoreViewModel
 ) {
 
     LocalLifecycleOwner.current.lifecycle.observe {
-      viewModel.handle(it)
+        viewModel.handle(it)
     }
 
     Column(modifier = Modifier.padding(horizontal = 12.dp)) {
@@ -39,7 +40,7 @@ fun ShopView(
                 .fillMaxSize(),
         ) {
             items(viewModel.products.size) { i ->
-                ProductShopView(product = viewModel.products[i])
+                ProductShopView(product = viewModel.products[i], navigateToProduct = navigateToProduct)
             }
         }
 

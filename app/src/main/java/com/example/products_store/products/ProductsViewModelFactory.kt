@@ -1,21 +1,19 @@
 package com.example.products_store.products
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.products_store.domain.repository.StoreApi
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.products_store.local.AppDatabaseProvider
+import com.example.products_store.local.ProductRepository
 
-class ProductsViewModelFactory : ViewModelProvider.Factory {
+class ProductsViewModelFactory(private val appContext: Context,private val productId: Int) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        val retrofitBuilder = retrofit2.Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://dummyjson.com/") // Fixme - change ip
-            .build()
-            .create(StoreApi::class.java)
 
-        return ProductsViewModel(
-        ) as T
+        val appDatabase = AppDatabaseProvider.provide(appContext)
+        val productRepository = ProductRepository(appDatabase.productDao())
+
+        return ProductsViewModel(productRepository, productId) as T
     }
 }
 

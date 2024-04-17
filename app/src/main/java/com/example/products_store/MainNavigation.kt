@@ -6,24 +6,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.payplus.ui.ProductsStoreTheme
+import androidx.navigation.navArgument
+import com.example.products_store.MainPage.Favorite
+import com.example.products_store.MainPage.Id
 import com.example.products_store.MainPage.Login
-import com.example.products_store.MainPage.Product
+import com.example.products_store.MainPage.ProductId
 import com.example.products_store.MainPage.Settings
 import com.example.products_store.MainPage.Store
-import com.example.products_store.local.ProductRepository
+import com.example.products_store.products.ProductView
+import com.example.products_store.products.ProductsViewModelFactory
 import com.example.products_store.settings.SettingsViewModelFactory
-import com.example.products_store.store.ShopView
+import com.example.products_store.settings.ThemeRepository
+import com.example.products_store.store.StoreView
 import com.example.products_store.store.StoreViewModelFactory
-import com.example.products_store.settings.theme.ThemeRepository
-import com.example.products_store.settings.theme.ThemeRepository.isDarkTheme
 
 object MainPage {
     const val Login = "Login"
     const val Store = "Store"
-    const val Product = "Product"
+    const val ProductId = "Product/{id}"
+    const val Id = "id"
+    const val Favorite = "Favorite"
     const val Settings = "Settings"
 }
 
@@ -32,39 +37,48 @@ fun MainNavigation(
     navController: NavHostController,
     modifier: Modifier
 ) {
+    val appContext = LocalContext.current.applicationContext
+    NavHost(navController, startDestination = Store, modifier = modifier) {
 
-    ProductsStoreTheme(
-        darkTheme = ThemeRepository.onThemeChange(isDarkTheme = isDarkTheme)
-    ) {
-        val appContext = LocalContext.current.applicationContext
-        NavHost(navController, startDestination = Store, modifier = modifier) {
+        composable(route = Login) {
 
-            composable(route = Login) {
-
-            }
-
-            composable(route = Store) {
-                ShopView(
-                    viewModel(
-                        factory = StoreViewModelFactory(appContext)
-                    )
-                )
-            }
-
-            composable(route = Product) {
-
-            }
-
-            composable(route = Settings) {
-                SettingsView(
-                    viewModel(
-                        factory = SettingsViewModelFactory(ThemeRepository)
-                    )
-                )
-            }
         }
 
+        composable(route = Store) {
+            StoreView(
+                navigateToProduct = { id ->
+                    navController.navigate(route = "Product/$id")
+                },
+                viewModel(
+                    factory = StoreViewModelFactory(appContext)
+                )
+            )
+        }
 
+        composable(route = ProductId,
+            arguments = listOf(
+                navArgument(Id) {
+                    type = NavType.IntType
+                }
+            )) { navBackStackEntry ->
+            val productId = navBackStackEntry.arguments?.getInt(Id) ?: 0
+            ProductView(
+                viewModel(
+                    factory = ProductsViewModelFactory(appContext, productId)
+                )
+            )
+        }
 
+        composable(route = Settings) {
+            SettingsView(
+                viewModel(
+                    factory = SettingsViewModelFactory(ThemeRepository)
+                )
+            )
+        }
+
+        composable(route = Favorite) {
+
+        }
     }
 }

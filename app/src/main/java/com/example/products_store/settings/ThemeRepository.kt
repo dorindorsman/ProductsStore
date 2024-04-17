@@ -1,10 +1,11 @@
-package com.example.products_store.settings.theme
+package com.example.products_store.settings
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.example.products_store.settings.AppTheme
 
 object ThemeRepository {
 

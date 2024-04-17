@@ -5,10 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.products_store.data.repository.StoreProvider
 import com.example.products_store.data.repository.StoreRepository
-import com.example.products_store.domain.repository.StoreApi
 import com.example.products_store.local.AppDatabaseProvider
 import com.example.products_store.local.ProductRepository
-import retrofit2.converter.gson.GsonConverterFactory
 
 class StoreViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
 
@@ -20,7 +18,7 @@ class StoreViewModelFactory(private val context: Context) : ViewModelProvider.Fa
 
         return StoreViewModel(
             storeRepository,
-            productRepository
+            productRepository,
         ) as T
     }
 }

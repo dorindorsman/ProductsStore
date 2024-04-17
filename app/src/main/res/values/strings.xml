@@ -11,6 +11,11 @@
     <string name="dark">Dark</string>
     <string name="light">Light</string>
     <string name="system">System</string>
+    <string name="discountPercentage">Discount Percentage</string>
+    <string name="rating">Rating</string>
+    <string name="category">Category</string>
+    <string name="stock">Stock</string>
+    <string name="images">Images</string>
 
 
 </resources>
