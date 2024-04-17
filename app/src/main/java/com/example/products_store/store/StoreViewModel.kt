@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,14 +29,17 @@ class StoreViewModel(
     )
 
     fun handle(event: StoreEvent) {
+        Log.d(TAG, "$event")
         when (event) {
-            // StoreEvent.GetStore -> TODO()
-            else -> {}
+            is StoreEvent.SetProductFavorite -> {
+                setProductFavorite(event.isFavorite, event.id)
+                updateProductFavoriteDB(event.isFavorite, event.id)
+            }
         }
     }
 
     fun handle(event: Lifecycle.Event) {
-        Log.d(TAG,"$event")
+        Log.d(TAG, "$event")
         when (event) {
             Lifecycle.Event.ON_START -> onStart()
             else -> Unit
@@ -43,7 +47,33 @@ class StoreViewModel(
     }
 
     private fun onStart() {
+        Log.d(TAG, "onStart")
         setProductList()
+    }
+
+    private fun setProductFavorite(isFavorite: Boolean, id: Int) {
+        Log.d(TAG, "setProductFavorite")
+        val newProduct = mutableListOf<Product>()
+        newProduct.addAll(
+            products.map {
+                if (it.id == id) {
+                    it.favorite = isFavorite
+                }
+                it
+            }
+        )
+        products = newProduct
+    }
+
+    private fun updateProductFavoriteDB(isFavorite: Boolean, id: Int) = viewModelScope.launch(Dispatchers.IO) {
+        Log.d(TAG, "updateProductFavoriteDB")
+        val product = products.filter {
+            it.id == id
+        }[0]
+
+        product.favorite = isFavorite
+        val entity = ProductsMapper.refactorProductToProductEntity(product)
+        productRepository.setProduct(entity)
     }
 
     private fun setProductList() = viewModelScope.launch(Dispatchers.IO) {
@@ -60,10 +90,9 @@ class StoreViewModel(
     private fun getLocalProducts() = viewModelScope.launch(Dispatchers.IO) {
         Log.d(TAG, "getLocalProducts")
         productRepository.getAllProducts().collect {
-            products = ProductsMapper.mapProductEntityToProduct(it)
+            products = ProductsMapper.mapProductEntityToProduct(it).toMutableStateList()
         }
     }
-
 
     private fun getRemoteProducts() = viewModelScope.launch(Dispatchers.IO) {
         Log.d(TAG, "getRemoteProducts")
@@ -71,7 +100,7 @@ class StoreViewModel(
         storeRepository.getStore().also { response ->
             if (response is Response.Success) {
                 Log.d(TAG, "${response.data}")
-                products = response.data.products
+                products = response.data.products.toMutableStateList()
                 initLocalDatabase()
             } else if (response is Response.Error) {
                 response.apply {
@@ -82,16 +111,10 @@ class StoreViewModel(
     }
 
     private fun initLocalDatabase() {
+        Log.d(TAG, "initLocalDatabase")
         viewModelScope.launch(Dispatchers.IO) {
             productRepository.insertAll(ProductsMapper.mapProductToProductEntity(products))
         }
     }
-
-//    private fun orderShop() {
-//        Log.d(TAG, "orderShop")
-//        shopCategories = shop.products.groupBy {
-//            it.category
-//        }.toList()
-//    }
 
 }

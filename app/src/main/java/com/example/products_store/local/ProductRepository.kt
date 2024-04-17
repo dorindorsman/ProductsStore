@@ -20,4 +20,7 @@ class ProductRepository(private val productDao: ProductDao) {
         return productDao.getProductById(id)
     }
 
+    fun setProduct(entity: ProductEntity) {
+        productDao.setProduct(entity)
+    }
 }

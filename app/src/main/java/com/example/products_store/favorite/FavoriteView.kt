@@ -15,24 +15,28 @@ import com.example.products_store.utils.observe
 fun FavoriteView(
     navigateToProduct: (id: Int) -> Unit,
     viewModel: FavoriteViewModel
-    ) {
+) {
 
-        LocalLifecycleOwner.current.lifecycle.observe {
-            viewModel.handle(it)
-        }
-
-        Column(modifier = Modifier.padding(horizontal = 12.dp)) {
-
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize(),
-            ) {
-                items(viewModel.favoriteProducts.size) { i ->
-                    ProductShopView(product = viewModel.favoriteProducts[i], navigateToProduct = navigateToProduct)
-                }
-            }
-
-        }
-
-
+    LocalLifecycleOwner.current.lifecycle.observe {
+        viewModel.handle(it)
     }
+
+    Column(modifier = Modifier.padding(horizontal = 12.dp)) {
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize(),
+        ) {
+            items(viewModel.favoriteProducts.size) { i ->
+                ProductShopView(
+                    product = viewModel.favoriteProducts[i], navigateToProduct = navigateToProduct,
+                    onClick = {
+                        viewModel.handle(FavoriteEvent.SetProductFavorite(it.favorite.not(), it.id))
+                    }
+                )
+            }
+        }
+    }
+
+}
+

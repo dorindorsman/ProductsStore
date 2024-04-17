@@ -1,8 +1,8 @@
 package com.example.products_store
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -13,7 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.products_store.main.MainScreen
 import com.example.products_store.ui.ProductsStoreTheme
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

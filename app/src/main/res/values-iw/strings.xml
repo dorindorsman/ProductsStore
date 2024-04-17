@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">חנות מוצרים</string>
+
+    <string name="store">חנות</string>
+    <string name="settings">הגדרות</string>
+    <string name="favorite">מועדפים</string>
+    <string name="brand">דגם</string>
+    <string name="price">מחיר</string>
+    <string name="description">תיאור</string>
+    <string name="title">כותרת</string>
+
+
+    <string name="discountPercentage">אחוז הנחה</string>
+    <string name="rating">דירוג</string>
+    <string name="category">קטגוריה</string>
+    <string name="stock">מלאי</string>
+    <string name="images">תמונות</string>
+
+
+    <string name="theme">ערכת נושא</string>
+    <string name="dark">לילה</string>
+    <string name="light">יום</string>
+    <string name="system">מערכת</string>
+    <string name="language">שפה</string>
+    <string name="english">אנגלית</string>
+    <string name="hebrew">עברית</string>
+</resources>

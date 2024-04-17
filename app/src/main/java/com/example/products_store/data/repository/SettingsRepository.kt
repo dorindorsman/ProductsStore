@@ -68,7 +68,7 @@ class SettingsRepository(
             }
         }
         .map { preferences ->
-            val appTheme = preferences[PreferenceKeys.lanKey] ?: AppLanguage.English.name
+            val appTheme = preferences[PreferenceKeys.lanKey] ?: AppLanguage.System.name
             appTheme
         }
 

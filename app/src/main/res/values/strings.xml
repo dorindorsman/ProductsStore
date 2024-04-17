@@ -1,21 +1,29 @@
 <resources>
     <string name="app_name">ProductsStore</string>
 
-    <string name="shop">Shop</string>
+    <string name="store">Store</string>
+    <string name="settings">Settings</string>
+    <string name="favorite">Favorite</string>
     <string name="brand">Brand</string>
     <string name="price">Price</string>
     <string name="description">Description</string>
     <string name="title">Title</string>
 
 
-    <string name="dark">Dark</string>
-    <string name="light">Light</string>
-    <string name="system">System</string>
     <string name="discountPercentage">Discount Percentage</string>
     <string name="rating">Rating</string>
     <string name="category">Category</string>
     <string name="stock">Stock</string>
     <string name="images">Images</string>
+
+
+    <string name="theme">Theme</string>
+    <string name="dark">Dark</string>
+    <string name="light">Light</string>
+    <string name="system">System</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="hebrew">Hebrew</string>
 
 
 </resources>

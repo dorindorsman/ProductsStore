@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 
 @Composable
@@ -41,12 +42,12 @@ fun BottomNavigationBar(navController: NavController) {
                     Icon(
                         imageVector = item.icon!!,
                         tint = if (selected) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.onPrimary,
-                        contentDescription = item.title
+                        contentDescription = ""
                     )
                 },
                 label = {
                     Text(
-                        text = item.title,
+                        text = stringResource(id = item.title),
                         color = if (selected) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.onPrimary,
                     )
                 },

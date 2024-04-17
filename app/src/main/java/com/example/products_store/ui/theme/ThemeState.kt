@@ -1,20 +1,17 @@
-package com.example.products_store.ui
+package com.example.products_store.ui.theme
 
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.example.products_store.data.models.AppTheme
 import com.example.products_store.data.repository.SettingsRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import com.example.products_store.ui.StateFactory
 
-object ThemeState : (ThemeStateFactory) -> ThemeState {
+object ThemeState : (StateFactory) -> ThemeState {
 
     private const val TAG = "ThemeState"
 
@@ -23,7 +20,7 @@ object ThemeState : (ThemeStateFactory) -> ThemeState {
     private lateinit var settingsRepository: SettingsRepository
     private var typeInitialized = false
 
-    override fun invoke(factory: ThemeStateFactory): ThemeState {
+    override fun invoke(factory: StateFactory): ThemeState {
         Log.d(TAG, "invoke")
         settingsRepository = factory.getSettingsRepository()
         return this
@@ -31,7 +28,7 @@ object ThemeState : (ThemeStateFactory) -> ThemeState {
 
     fun isInitialized() = this::settingsRepository.isInitialized
 
-    fun initState() {
+    fun initState(owner: LifecycleOwner) {
         Log.d(TAG, "initState")
         if (typeInitialized) {
             return
@@ -39,7 +36,10 @@ object ThemeState : (ThemeStateFactory) -> ThemeState {
 
         Log.d(TAG, "setState")
         val liveData : LiveData<String> = settingsRepository.readAppTheme.asLiveData()
-        theme = AppTheme.valueOf(liveData.value ?: AppTheme.System.name)
+        liveData.observe(owner){
+            theme = AppTheme.valueOf(it)
+        }
+        Log.d(TAG, "${liveData.value}")
         typeInitialized = true
     }
 

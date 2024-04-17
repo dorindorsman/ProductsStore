@@ -19,6 +19,8 @@ import com.example.products_store.MainPage.Store
 import com.example.products_store.favorite.FavoriteView
 import com.example.products_store.favorite.FavoriteViewModelFactory
 import com.example.products_store.products.ProductView
+import com.example.products_store.products.ProductsEvent
+import com.example.products_store.products.ProductsViewModel
 import com.example.products_store.products.ProductsViewModelFactory
 import com.example.products_store.settings.SettingsViewModelFactory
 import com.example.products_store.store.StoreView
@@ -63,10 +65,12 @@ fun MainNavigation(
                 }
             )) { navBackStackEntry ->
             val productId = navBackStackEntry.arguments?.getInt(Id) ?: 0
+            val productViewModel : ProductsViewModel = viewModel(
+                factory = ProductsViewModelFactory(appContext, productId)
+            )
             ProductView(
-                viewModel(
-                    factory = ProductsViewModelFactory(appContext, productId)
-                )
+                productViewModel,
+                onClick = {productViewModel.handle(ProductsEvent.SetProductFavorite)}
             )
         }
 

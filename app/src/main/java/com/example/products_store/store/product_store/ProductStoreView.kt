@@ -23,13 +23,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
 import com.example.products_store.R
 import com.example.products_store.domain.models.Product
 
 @Composable
-fun ProductShopView(product: Product, navigateToProduct: (id: Int) -> Unit) {
+fun ProductShopView(product: Product, navigateToProduct: (id: Int) -> Unit, onClick: (product: Product) -> Unit) {
 
     Row(
         modifier = Modifier
@@ -55,10 +54,8 @@ fun ProductShopView(product: Product, navigateToProduct: (id: Int) -> Unit) {
                 modifier = Modifier
                     .size(50.dp)
                     .align(Alignment.TopStart)
-                    .padding(10.dp) // Adjust padding as necessary
-                    .clickable {
-                        // Implement action when icon is clicked
-                    },
+                    .padding(10.dp)
+                    .clickable { onClick(product) },
                 painter = if (product.favorite) {
                     painterResource(id = R.drawable.ic_favorite)
                 } else {

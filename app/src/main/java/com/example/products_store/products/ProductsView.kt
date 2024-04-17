@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -33,15 +34,17 @@ import com.example.products_store.R
 import com.example.products_store.utils.observe
 
 @Composable
-fun ProductView(viewModel: ProductsViewModel) {
+fun ProductView(viewModel: ProductsViewModel, onClick: () -> Unit) {
 
     LocalLifecycleOwner.current.lifecycle.observe {
         viewModel.handle(it)
     }
+    val columnScrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(columnScrollState)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
@@ -52,7 +55,7 @@ fun ProductView(viewModel: ProductsViewModel) {
                 .size(30.dp)
                 .align(Alignment.End)
                 .clickable {
-                           //fixme
+                    onClick()
                 },
             painter = if (viewModel.selectedProduct.favorite) {
                 painterResource(id = R.drawable.ic_favorite)
@@ -107,12 +110,12 @@ fun ProductView(viewModel: ProductsViewModel) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        val scrollState = rememberScrollState()
+        val rowScrollState = rememberScrollState()
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .horizontalScroll(scrollState),
+                .horizontalScroll(rowScrollState),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.Bottom
         ) {
@@ -145,7 +148,7 @@ fun TextDetails(key: String, value: String) {
             modifier = Modifier.padding(start = 4.dp, top = 4.dp),
             text = key,
             style = MaterialTheme.typography.body2,
-            color = Color.Gray,
+            color = MaterialTheme.colors.onBackground,
             maxLines = 1
         )
         Text(
@@ -157,7 +160,7 @@ fun TextDetails(key: String, value: String) {
                 }
                 .padding(start = 4.dp),
             text = value,
-            color = Color.DarkGray,
+            color = MaterialTheme.colors.onBackground,
             maxLines = 4,
             overflow = TextOverflow.Ellipsis
         )

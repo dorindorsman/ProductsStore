@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.products_store.domain.models.Product
 import com.example.products_store.local.ProductRepository
-import com.example.products_store.store.ProductsMapper
 import com.example.products_store.store.ProductsMapper.mapProductEntityToProduct
+import com.example.products_store.store.StoreViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -28,8 +28,7 @@ class FavoriteViewModel(
 
     fun handle(event: FavoriteEvent) {
         when (event) {
-            // StoreEvent.GetStore -> TODO()
-            else -> {}
+            is FavoriteEvent.SetProductFavorite -> {setProductFavorite(event.isFavorite, event.id)}
         }
     }
 
@@ -43,6 +42,20 @@ class FavoriteViewModel(
 
     private fun onStart() {
         setFavorites()
+    }
+
+    private fun setProductFavorite(isFavorite: Boolean, id: Int) {
+        Log.d(StoreViewModel.TAG, "setProductFavorite")
+        val newProduct = mutableListOf<Product>()
+        newProduct.addAll(
+            favoriteProducts.map {
+                if (it.id == id) {
+                    it.favorite = isFavorite
+                }
+                it
+            }
+        )
+        favoriteProducts = newProduct
     }
 
 

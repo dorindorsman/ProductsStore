@@ -30,7 +30,10 @@ class ProductsViewModel(
     fun handle(event: ProductsEvent) {
         Log.d(TAG, "handle $event")
         when (event) {
-            ProductsEvent.GetShop -> {} //Fixme
+            ProductsEvent.SetProductFavorite -> {
+                setProductFavorite()
+                updateProductFavoriteDB()
+            }
         }
     }
 
@@ -56,5 +59,15 @@ class ProductsViewModel(
         }
     }
 
+    private fun setProductFavorite() {
+        Log.d(TAG, "setProductFavorite")
+        selectedProduct = selectedProduct.copy(favorite =  selectedProduct.favorite.not())
+        Log.d(TAG, "${selectedProduct.favorite}")
+    }
+
+    private fun updateProductFavoriteDB() = viewModelScope.launch(Dispatchers.IO) {
+        val entity = ProductsMapper.refactorProductToProductEntity(selectedProduct)
+        productRepository.setProduct(entity)
+    }
 
 }

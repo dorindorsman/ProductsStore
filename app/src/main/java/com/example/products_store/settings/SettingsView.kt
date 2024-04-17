@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.products_store.R
+import com.example.products_store.data.models.AppLanguage
 import com.example.products_store.settings.SettingsViewModel
 import com.example.products_store.data.models.AppTheme
 import com.example.products_store.settings.SettingsEvent
@@ -33,28 +34,22 @@ fun SettingsView(viewModel: SettingsViewModel) {
             }
         )
         LanguagePreference(
-            currentLanguage = viewModel.currentLanguage.value ?: "English",
-            onLanguageSelected = {
-                //   viewModel.setLanguage(it)
+            currentLanguage = viewModel.getLanguage(),
+            onClick = { language ->
+                viewModel.handle(SettingsEvent.UpdateLanguage(language))
             }
         )
-        Button(
-            onClick = {
-                //  viewModel.logOut()
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text("Log Out")
-        }
     }
 }
 
 @Composable
 fun ThemeRadioButton(onThemeChange: (AppTheme) -> Unit, theme: AppTheme) {
-    Column {
-        Text("Theme")
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    )  {
+        Text(stringResource(id = R.string.theme))
         LabeledRadioButton(
             label = stringResource(id = R.string.light),
             selected = AppTheme.Light == theme,
@@ -92,20 +87,33 @@ fun LabeledRadioButton(
 }
 
 @Composable
-fun LanguagePreference(currentLanguage: String, onLanguageSelected: (String) -> Unit) {
+fun LanguagePreference(onClick: (AppLanguage) -> Unit, currentLanguage: AppLanguage) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        Text("Language")
+        Text(stringResource(id = R.string.language))
         Row {
-            Button(onClick = { onLanguageSelected("English") }) {
-                Text("English", color = if (currentLanguage == "English") MaterialTheme.colors.primary else MaterialTheme.colors.onSurface)
+            Button(onClick = { onClick(AppLanguage.English) }) {
+                Text(
+                    text = stringResource(id = R.string.english),
+                    color = if (currentLanguage == AppLanguage.English) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.onPrimary
+                    )
             }
             Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = { onLanguageSelected("Hebrew") }) {
-                Text("Hebrew", color = if (currentLanguage == "Hebrew") MaterialTheme.colors.primary else MaterialTheme.colors.onSurface)
+            Button(onClick = { onClick(AppLanguage.Hebrew) }) {
+                Text(
+                    text = stringResource(id = R.string.hebrew),
+                    color = if (currentLanguage == AppLanguage.Hebrew) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.onPrimary
+                )
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(onClick = { onClick(AppLanguage.System) }) {
+                Text(
+                    text = stringResource(id = R.string.system),
+                    color = if (currentLanguage == AppLanguage.System) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.onPrimary
+                )
             }
         }
     }

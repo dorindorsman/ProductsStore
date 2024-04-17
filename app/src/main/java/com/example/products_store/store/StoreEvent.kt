@@ -1,5 +1,5 @@
 package com.example.products_store.store
 
 sealed class StoreEvent {
-  //  data object GetStore: StoreEvent()
+    data class SetProductFavorite(val isFavorite: Boolean, val id: Int): StoreEvent()
 }

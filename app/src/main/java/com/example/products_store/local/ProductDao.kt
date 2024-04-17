@@ -2,7 +2,11 @@ package com.example.products_store.local
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
+import androidx.room.Upsert
+import com.example.products_store.domain.models.Product
 import kotlinx.coroutines.flow.Flow
 
 // Data Access Object
@@ -19,6 +23,9 @@ interface ProductDao {
 
     @Query("SELECT * FROM products WHERE id = :id")
     fun getProductById(id: Int): Flow<ProductEntity>
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun setProduct(entity: ProductEntity)
 
 
 }
