@@ -1,7 +1,6 @@
 package com.example.products_store
 
 import SettingsView
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -14,10 +13,10 @@ import com.example.products_store.MainPage.Login
 import com.example.products_store.MainPage.Product
 import com.example.products_store.MainPage.Settings
 import com.example.products_store.MainPage.Store
+import com.example.products_store.local.ProductRepository
 import com.example.products_store.settings.SettingsViewModelFactory
 import com.example.products_store.store.ShopView
 import com.example.products_store.store.StoreViewModelFactory
-import com.example.products_store.settings.theme.AppTheme
 import com.example.products_store.settings.theme.ThemeRepository
 import com.example.products_store.settings.theme.ThemeRepository.isDarkTheme
 
@@ -31,7 +30,7 @@ object MainPage {
 @Composable
 fun MainNavigation(
     navController: NavHostController,
-    modifier: Modifier,
+    modifier: Modifier
 ) {
 
     ProductsStoreTheme(
@@ -47,7 +46,7 @@ fun MainNavigation(
             composable(route = Store) {
                 ShopView(
                     viewModel(
-                        factory = StoreViewModelFactory()
+                        factory = StoreViewModelFactory(appContext)
                     )
                 )
             }

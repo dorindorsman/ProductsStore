@@ -11,19 +11,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.payplus.ui.ProductsStoreTheme
+import com.example.products_store.local.AppDatabaseProvider
+import com.example.products_store.local.ProductRepository
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
 
+        setContent {
             ProductsStoreTheme {
                 // A surface container using the 'background' color from the theme
                 val navController = rememberNavController()
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
                     MainNavigation(
                         modifier = Modifier,
-                        navController = navController
+                        navController = navController,
                     )
                 }
             }

@@ -2,7 +2,7 @@ package com.example.products_store.products
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.products_store.domain.repository.ShopApi
+import com.example.products_store.domain.repository.StoreApi
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ProductsViewModelFactory : ViewModelProvider.Factory {
@@ -12,7 +12,7 @@ class ProductsViewModelFactory : ViewModelProvider.Factory {
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("https://dummyjson.com/") // Fixme - change ip
             .build()
-            .create(ShopApi::class.java)
+            .create(StoreApi::class.java)
 
         return ProductsViewModel(
         ) as T

@@ -9,15 +9,22 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.products_store.store.product_store.ProductShopView
 import com.example.products_store.R
+import com.example.products_store.utils.observe
 
 @Composable
 fun ShopView(
     viewModel: StoreViewModel
 ) {
+
+    LocalLifecycleOwner.current.lifecycle.observe {
+      viewModel.handle(it)
+    }
+
     Column(modifier = Modifier.padding(horizontal = 12.dp)) {
         Text(
             text = stringResource(id = R.string.shop),
@@ -31,8 +38,8 @@ fun ShopView(
             modifier = Modifier
                 .fillMaxSize(),
         ) {
-            items(viewModel.shopProducts.size) { i ->
-                ProductShopView(product = viewModel.shopProducts[i])
+            items(viewModel.products.size) { i ->
+                ProductShopView(product = viewModel.products[i])
             }
         }
 

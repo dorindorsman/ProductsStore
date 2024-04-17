@@ -8,7 +8,7 @@ import com.example.products_store.utils.ImageConverter
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "products")
-data class Product(
+data class ProductEntity(
     @PrimaryKey
     @SerializedName("id")
     @ColumnInfo(name = "id")

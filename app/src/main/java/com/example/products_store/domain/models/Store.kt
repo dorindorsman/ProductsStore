@@ -2,7 +2,7 @@ package com.example.products_store.domain.models
 
 import com.google.gson.annotations.SerializedName
 
-data class Shop(
+data class Store(
     @SerializedName("products")
     var products: List<Product> = emptyList(),
 

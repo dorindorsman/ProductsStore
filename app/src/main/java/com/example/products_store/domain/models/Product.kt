@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Product(
     @SerializedName("id")
-    var id: Int? = null,
+    var id: Int = 0,
 
     @SerializedName("title")
     var title: String? = null,
